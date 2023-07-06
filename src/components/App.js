@@ -9,6 +9,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import { useEffect, useState } from 'react';
 import { api } from '../utils/Api';
+import { Routes, Route } from 'react-router-dom';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { CardsContext } from '../context/CardsContext';
 import AddPlacePopup from './AddPlacePopup';
@@ -119,16 +120,23 @@ function App() {
         <div className='body'>
           <div className='page'>
             <Header />
-            {/* <Main
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handelCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-            /> */}
-            {/* <Registration/> */}
-            <Login/>
+            <Routes>
+              <Route
+                path='/'
+                element={
+                  <Main
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onCardClick={handelCardClick}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                  />
+                }
+              />
+              <Route path='/sign-up' element={<Registration />} />
+              <Route path='/sign-in' element={<Login />} />
+            </Routes>
             <Footer />
           </div>
           {/* <!-- попап редактирования профайла --> */}
