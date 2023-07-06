@@ -1,0 +1,8 @@
+.sign__link {
+
+}
+
+.sign__link:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

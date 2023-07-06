@@ -1,0 +1,8 @@
+.sign__title {
+  margin: 0;
+  font-weight: var(--weight-black);
+  font-size: 24px;
+  font-style: normal;
+  line-height: 29px;
+  padding-bottom: 50px;
+}

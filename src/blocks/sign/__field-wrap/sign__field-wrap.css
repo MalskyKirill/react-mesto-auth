@@ -1,0 +1,7 @@
+.sign__field-wrap {
+  padding-bottom: 30px;
+}
+
+.sign__field-wrap:last-of-type {
+  padding-bottom: 216px;
+}

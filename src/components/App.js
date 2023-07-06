@@ -1,5 +1,7 @@
 import Header from './Header';
-import Main from './Main';
+import Main from '../pages/Main';
+import Registration from '../pages/Registration';
+import Login from '../pages/Login';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
@@ -117,14 +119,16 @@ function App() {
         <div className='body'>
           <div className='page'>
             <Header />
-            <Main
+            {/* <Main
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}
               onEditAvatar={handleEditAvatarClick}
               onCardClick={handelCardClick}
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete}
-            />
+            /> */}
+            {/* <Registration/> */}
+            <Login/>
             <Footer />
           </div>
           {/* <!-- попап редактирования профайла --> */}
