@@ -13,12 +13,14 @@ import { Routes, Route } from 'react-router-dom';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { CardsContext } from '../context/CardsContext';
 import AddPlacePopup from './AddPlacePopup';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(true);
 
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -60,6 +62,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
+    setIsInfoTooltipOpen(false);
   };
 
   //лайк карточки
@@ -170,6 +173,7 @@ function App() {
             isOpened={isImagePopupOpen}
             onClose={closeAllPopup}
           />
+          <InfoTooltip isOpened={isInfoTooltipOpen} onClose={closeAllPopup} />
         </div>
       </CurrentUserContext.Provider>
     </CardsContext.Provider>

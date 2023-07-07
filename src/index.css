@@ -79,3 +79,6 @@
 @import url(./blocks/popup/__save/_disabled/popup__save_disabled.css);
 @import url(./blocks/popup/__photo/popup__photo.css);
 @import url(./blocks/popup/__photo-name/popup__photo-name.css);
+@import url(./blocks/popup/__sing-up-img/popup__sing-up-img.css);
+@import url(./blocks/popup/__container/_img/popup__container_img.css);
+@import url(./blocks/popup/__title/img/popup__title_img.css);
