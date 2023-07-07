@@ -1,5 +1,3 @@
-import union from '../images/Union.png'
-
 function InfoTooltip ({isOpened, onClose}) {
 
 

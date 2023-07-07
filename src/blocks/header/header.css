@@ -4,6 +4,8 @@
   padding: 27px 0 0 27px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (min-width: 610px) {
