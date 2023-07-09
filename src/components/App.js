@@ -9,11 +9,12 @@ import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import { useEffect, useState } from 'react';
 import { api } from '../utils/Api';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { CardsContext } from '../context/CardsContext';
 import AddPlacePopup from './AddPlacePopup';
 import InfoTooltip from './InfoTooltip';
+import ProtectedRouteElement from './ProtectedRoute';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -21,6 +22,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -122,18 +125,20 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <div className='body'>
           <div className='page'>
-            <Header />
+            <Header loggedIn={loggedIn}/>
             <Routes>
               <Route
                 path='/'
                 element={
-                  <Main
+                  <ProtectedRouteElement
+                    element={Main}
                     onEditProfile={handleEditProfileClick}
                     onAddPlace={handleAddPlaceClick}
                     onEditAvatar={handleEditAvatarClick}
                     onCardClick={handelCardClick}
                     onCardLike={handleCardLike}
                     onCardDelete={handleCardDelete}
+                    loggedIn={loggedIn}
                   />
                 }
               />
