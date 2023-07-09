@@ -128,7 +128,7 @@ function App() {
             <Header loggedIn={loggedIn}/>
             <Routes>
               <Route
-                path='/'
+                path='/*'
                 element={
                   <ProtectedRouteElement
                     element={Main}
