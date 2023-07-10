@@ -9,12 +9,13 @@ import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import { useEffect, useState } from 'react';
 import { api } from '../utils/Api';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { CardsContext } from '../context/CardsContext';
 import AddPlacePopup from './AddPlacePopup';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRouteElement from './ProtectedRoute';
+import { getContent } from '../utils/authMesto';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -30,6 +31,8 @@ function App() {
   //стейты пользователя и карточек
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+
+  const navigate = useNavigate();
 
   //открытия попапов
   const handleEditProfileClick = () => {
@@ -57,6 +60,11 @@ function App() {
         setCards(resCardData);
       })
       .catch((err) => console.log(err));
+  }, []);
+
+  //проверка токена
+  useEffect(() => {
+    tokenCheck();
   }, []);
 
   //закрытие всех попапов
@@ -126,6 +134,21 @@ function App() {
     setLoggedIn(true);
   };
 
+  const tokenCheck = () => {
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        getContent(token).then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            navigate('/', { replace: true });
+          }
+        });
+      }
+    }
+  };
+
   return (
     <CardsContext.Provider value={cards}>
       <CurrentUserContext.Provider value={currentUser}>
@@ -149,7 +172,10 @@ function App() {
                 }
               />
               <Route path='/sign-up' element={<Registration />} />
-              <Route path='/sign-in' element={<Login handleLogin={handleLogin} />} />
+              <Route
+                path='/sign-in'
+                element={<Login handleLogin={handleLogin} />}
+              />
             </Routes>
             <Footer />
           </div>

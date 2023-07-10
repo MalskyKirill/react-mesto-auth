@@ -41,3 +41,16 @@ export const authorize = (email, password) => {
       }
     });
 };
+
+//проверка токена
+export const getContent = (token) => {
+  return fetch(`${AUTH_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization" : `Bearer ${token}`
+    }
+  }).then((res) => {
+    return getResponseData(res);
+  })
+}
