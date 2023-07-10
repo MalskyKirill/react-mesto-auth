@@ -12,11 +12,8 @@ function Login({ handleLogin }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log('submit');
 
     const { email, password } = formValue;
-
-    console.log(email, password);
 
     authorize(email, password)
       .then((data) => {

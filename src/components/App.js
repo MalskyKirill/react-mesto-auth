@@ -30,6 +30,7 @@ function App() {
 
   //стейты пользователя и карточек
   const [currentUser, setCurrentUser] = useState({});
+  const [userEmail, setUserEmail] = useState('');
   const [cards, setCards] = useState([]);
 
   const navigate = useNavigate();
@@ -139,12 +140,15 @@ function App() {
       const token = localStorage.getItem('token');
 
       if (token) {
-        getContent(token).then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            navigate('/', { replace: true });
-          }
-        });
+        getContent(token)
+          .then((res) => {
+            if (res) {
+              setUserEmail(res.data.email);
+              setLoggedIn(true);
+              navigate('/', { replace: true });
+            }
+          })
+          .catch((err) => console.log(err));
       }
     }
   };
@@ -154,7 +158,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <div className='body'>
           <div className='page'>
-            <Header loggedIn={loggedIn} />
+            <Header loggedIn={loggedIn} userEmail={userEmail}/>
             <Routes>
               <Route
                 path='/*'

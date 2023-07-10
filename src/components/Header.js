@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-function Header({ loggedIn }) {
+function Header({ loggedIn, userEmail }) {
   const location = useLocation();
 
   console.log(location.pathname);
@@ -12,9 +12,12 @@ function Header({ loggedIn }) {
     <header className='header'>
       <div className='header__logo'></div>
       {loggedIn ? (
-        <Link className='header__link' to='/'>
-          Выйти
-        </Link>
+        <div className='header__wrap'>
+          <p className='header__email'>{userEmail}</p>
+          <Link className='header__link' to='/'>
+            Выйти
+          </Link>
+        </div>
       ) : (
         <Link className='header__link' to={path}>
           {title}
