@@ -110,6 +110,7 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  //создание новой карточки
   const handleAddPlaceSubmit = ({ title, link }) => {
     api
       .addCard({ title, link })
@@ -120,12 +121,17 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  //авторизация
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
+
   return (
     <CardsContext.Provider value={cards}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className='body'>
           <div className='page'>
-            <Header loggedIn={loggedIn}/>
+            <Header loggedIn={loggedIn} />
             <Routes>
               <Route
                 path='/*'
@@ -143,7 +149,7 @@ function App() {
                 }
               />
               <Route path='/sign-up' element={<Registration />} />
-              <Route path='/sign-in' element={<Login />} />
+              <Route path='/sign-in' element={<Login handleLogin={handleLogin} />} />
             </Routes>
             <Footer />
           </div>

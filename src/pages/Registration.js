@@ -25,6 +25,7 @@ function Registration() {
     const { email, password } = formValue;
     register(email, password)
       .then((res) => {
+        setFormValue({ email: '', password: '' });
         navigate('/sign-in', { replace: true });
       })
       .catch((err) => console.log(err));

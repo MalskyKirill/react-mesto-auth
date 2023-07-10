@@ -28,7 +28,16 @@ export const authorize = (email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-  }).then((res) => {
-    return getResponseData(res);
-  });
+  })
+    .then((res) => {
+      return getResponseData(res);
+    })
+    .then((data) => {
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        return data;
+      } else {
+        return;
+      }
+    });
 };
