@@ -7,6 +7,7 @@ const getResponseData = (res) => {
   return res.json();
 };
 
+//регистрация пользователя
 export const register = (email, password) => {
   return fetch(`${AUTH_URL}/signup`, {
     method: 'POST',
@@ -15,7 +16,19 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   }).then((res) => {
-    console.log(res);
+    return getResponseData(res);
+  });
+};
+
+//авторизация пользователя
+export const authorize = (email, password) => {
+  return fetch(`${AUTH_URL}/signin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  }).then((res) => {
     return getResponseData(res);
   });
 };

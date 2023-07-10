@@ -1,19 +1,39 @@
-import {useState} from 'react'
+import { useState } from 'react';
+import { authorize } from '../utils/authMesto';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const [formValue, setFormValue] = useState({
+    email: '',
+    password: '',
+  });
 
-  const [email, setEmail] = useState('')
+  const navigate = useNavigate();
 
   const handleSubmit = (evt) => {
-    evt.preventDefault()
-    console.log('submit')
-  }
+    evt.preventDefault();
+    console.log('submit');
 
-  const onChange = (e) => {
-    console.log(e.target)
-    console.log(e.target.value)
-    setEmail(e.target.value)
-  }
+    const { email, password } = formValue;
+
+    console.log(email, password);
+
+    authorize(email, password)
+      .then((res) => {
+        console.log(res);
+        navigate('/', {replace: true})
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+  };
 
   return (
     <main className='content'>
@@ -29,8 +49,8 @@ function Login() {
               minLength='2'
               maxLength='30'
               required
-              onChange={onChange}
-              value={email}
+              onChange={handleChange}
+              value={formValue.email}
             />
           </label>
           <label className='sign__field-wrap'>
@@ -42,9 +62,13 @@ function Login() {
               minLength='2'
               maxLength='30'
               required
+              onChange={handleChange}
+              value={formValue.password}
             />
           </label>
-          <button className="sign__submit" type="submit">Войти</button>
+          <button className='sign__submit' type='submit'>
+            Войти
+          </button>
         </form>
       </section>
     </main>
