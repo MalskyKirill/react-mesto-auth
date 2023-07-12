@@ -139,11 +139,18 @@ function App() {
           navigate('/', { replace: true });
           localStorage.setItem('token', data.token);
           tokenCheck();
+          setLoggedIn(true);
         }
       })
       .catch((err) => console.log(err));
-    setLoggedIn(true);
+
   };
+
+  const handleSingOut = () => {
+    localStorage.removeItem('token')
+    navigate('/sign-in', { replace: true })
+    setLoggedIn(false);
+  }
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -168,7 +175,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <div className='body'>
           <div className='page'>
-            <Header loggedIn={loggedIn} userEmail={userEmail} />
+            <Header loggedIn={loggedIn} userEmail={userEmail} handleSingOut={handleSingOut}/>
             <Routes>
               <Route
                 path='/*'
