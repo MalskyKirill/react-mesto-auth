@@ -9,6 +9,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import { useEffect, useState } from 'react';
 import { api } from '../utils/Api';
+import { authorize } from '../utils/authMesto';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { CardsContext } from '../context/CardsContext';
@@ -131,7 +132,16 @@ function App() {
   };
 
   //авторизация
-  const handleLogin = () => {
+  const handleLogin = (email, password) => {
+    authorize(email, password)
+      .then((data) => {
+        if (data.token) {
+          navigate('/', { replace: true });
+          localStorage.setItem('token', data.token);
+          tokenCheck();
+        }
+      })
+      .catch((err) => console.log(err));
     setLoggedIn(true);
   };
 
@@ -158,7 +168,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <div className='body'>
           <div className='page'>
-            <Header loggedIn={loggedIn} userEmail={userEmail}/>
+            <Header loggedIn={loggedIn} userEmail={userEmail} />
             <Routes>
               <Route
                 path='/*'

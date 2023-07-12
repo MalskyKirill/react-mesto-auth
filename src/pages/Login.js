@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { authorize } from '../utils/authMesto';
-import { useNavigate } from 'react-router-dom';
 
 function Login({ handleLogin }) {
   const [formValue, setFormValue] = useState({
@@ -8,22 +6,12 @@ function Login({ handleLogin }) {
     password: '',
   });
 
-  const navigate = useNavigate();
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     const { email, password } = formValue;
-
-    authorize(email, password)
-      .then((data) => {
-        if (data.token) {
-          setFormValue({ email: '', password: '' });
-          handleLogin();
-          navigate('/', { replace: true });
-        }
-      })
-      .catch((err) => console.log(err));
+    handleLogin(email, password);
+    setFormValue({ email: '', password: '' });
   };
 
   const handleChange = (e) => {

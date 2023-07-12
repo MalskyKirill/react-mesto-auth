@@ -1,12 +1,16 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Header({ loggedIn, userEmail }) {
   const location = useLocation();
-
-  console.log(location.pathname);
+  const navigate = useNavigate();
 
   const title = location.pathname === '/sign-up' ? 'Вход' : 'Регистрация';
   const path = location.pathname === '/sign-up' ? '/sign-in' : '/sign-up';
+
+  function onSingOut() {
+    localStorage.removeItem('token')
+    // navigate('/sign-in', { replace: true })
+  }
 
   return (
     <header className='header'>
@@ -14,7 +18,7 @@ function Header({ loggedIn, userEmail }) {
       {loggedIn ? (
         <div className='header__wrap'>
           <p className='header__email'>{userEmail}</p>
-          <Link className='header__link' to='/'>
+          <Link to='/sign-in' onClick={onSingOut} className='header__link'>
             Выйти
           </Link>
         </div>
