@@ -9,7 +9,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import { useEffect, useState } from 'react';
 import { api } from '../utils/Api';
-import { authorize } from '../utils/authMesto';
+import { register, authorize } from '../utils/authMesto';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../context/CurrentUserContext';
 import { CardsContext } from '../context/CardsContext';
@@ -24,6 +24,9 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+
+  //статус попапа infoTooltip
+  const [status, setStatus] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -131,26 +134,46 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  //регистрация
+  const handleRegistration = (email, password) => {
+    register(email, password)
+      .then((res) => {
+        setIsInfoTooltipOpen(true);
+        setStatus(true);
+        navigate('/sign-in', { replace: true });
+      })
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setStatus(false);
+        console.log(err);
+      });
+  };
+
   //авторизация
   const handleLogin = (email, password) => {
     authorize(email, password)
       .then((data) => {
         if (data.token) {
-          navigate('/', { replace: true });
           localStorage.setItem('token', data.token);
           tokenCheck();
+
           setLoggedIn(true);
+          navigate('/', { replace: true });
         }
       })
-      .catch((err) => console.log(err));
-
+      .catch((err) => {
+        setIsInfoTooltipOpen(true);
+        setStatus(false);
+        console.log(err);
+      });
   };
 
+  // выход из профайла
   const handleSingOut = () => {
-    localStorage.removeItem('token')
-    navigate('/sign-in', { replace: true })
+    localStorage.removeItem('token');
+    navigate('/sign-in', { replace: true });
     setLoggedIn(false);
-  }
+  };
 
   const tokenCheck = () => {
     if (localStorage.getItem('token')) {
@@ -175,7 +198,11 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <div className='body'>
           <div className='page'>
-            <Header loggedIn={loggedIn} userEmail={userEmail} handleSingOut={handleSingOut}/>
+            <Header
+              loggedIn={loggedIn}
+              userEmail={userEmail}
+              handleSingOut={handleSingOut}
+            />
             <Routes>
               <Route
                 path='/*'
@@ -192,7 +219,12 @@ function App() {
                   />
                 }
               />
-              <Route path='/sign-up' element={<Registration />} />
+              <Route
+                path='/sign-up'
+                element={
+                  <Registration handleRegistration={handleRegistration} />
+                }
+              />
               <Route
                 path='/sign-in'
                 element={<Login handleLogin={handleLogin} />}
@@ -231,7 +263,11 @@ function App() {
             isOpened={isImagePopupOpen}
             onClose={closeAllPopup}
           />
-          <InfoTooltip isOpened={isInfoTooltipOpen} onClose={closeAllPopup} />
+          <InfoTooltip
+            isOpened={isInfoTooltipOpen}
+            onClose={closeAllPopup}
+            status={status}
+          />
         </div>
       </CurrentUserContext.Provider>
     </CardsContext.Provider>

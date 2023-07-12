@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../utils/authMesto';
+import { Link } from 'react-router-dom';
 
-function Registration() {
+function Registration({ handleRegistration }) {
   const [formValue, setFormValue] = useState({
     email: '',
     password: '',
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -23,12 +20,7 @@ function Registration() {
     evt.preventDefault();
 
     const { email, password } = formValue;
-    register(email, password)
-      .then((res) => {
-        setFormValue({ email: '', password: '' });
-        navigate('/sign-in', { replace: true });
-      })
-      .catch((err) => console.log(err));
+    handleRegistration(email, password);
   };
 
   return (
