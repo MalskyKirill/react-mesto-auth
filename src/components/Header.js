@@ -12,7 +12,7 @@ function Header({ loggedIn, userEmail, handleSingOut }) {
       {loggedIn ? (
         <div className='header__wrap'>
           <p className='header__email'>{userEmail}</p>
-          <button onClick={handleSingOut} className='header__link'>
+          <button onClick={handleSingOut} className='header__link-in'>
             Выйти
           </button>
         </div>
