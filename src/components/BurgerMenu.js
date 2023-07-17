@@ -1,11 +1,14 @@
-function BurgerMenu({ burgerOpen, userEmail, handleSingOut }) {
+function BurgerMenu({ burgerOpen, userEmail, handleOut }) {
+
+  console.log(burgerOpen)
+
   return (
-    <ul className={burgerOpen ? 'burger' : 'burger burger_active'}>
+    <ul className={!burgerOpen ? 'burger' : 'burger burger_active'}>
       <li>
         <p className='header__email'>{userEmail}</p>
       </li>
       <li>
-        <button onClick={handleSingOut} className='header__link-in'>
+        <button onClick={handleOut} className='header__link-in'>
           Выйти
         </button>
       </li>

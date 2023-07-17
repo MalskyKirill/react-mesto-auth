@@ -4,19 +4,24 @@ import { useState } from 'react';
 import BurgerMenu from './BurgerMenu';
 
 function Header({ loggedIn, userEmail, handleSingOut }) {
-  const [burgerOpen, setBurgerOpen] = useState(true);
+  const [burgerOpen, setBurgerOpen] = useState(false);
 
   const location = useLocation();
 
   const title = location.pathname === '/sign-up' ? 'Вход' : 'Регистрация';
   const path = location.pathname === '/sign-up' ? '/sign-in' : '/sign-up';
 
+  const handleOut = () => {
+    setBurgerOpen(false);
+    handleSingOut();
+  };
+
   return (
     <>
       <BurgerMenu
         burgerOpen={burgerOpen}
         userEmail={userEmail}
-        handleSingOut={handleSingOut}
+        handleOut={handleOut}
       />
       <header className='header'>
         <div className='header__logo'></div>
@@ -24,7 +29,7 @@ function Header({ loggedIn, userEmail, handleSingOut }) {
           <>
             <div className='header__wrap'>
               <p className='header__email'>{userEmail}</p>
-              <button onClick={handleSingOut} className='header__link-in'>
+              <button onClick={handleOut} className='header__link-in'>
                 Выйти
               </button>
             </div>
@@ -33,9 +38,9 @@ function Header({ loggedIn, userEmail, handleSingOut }) {
               className='header__mobile-btn'
             >
               {burgerOpen ? (
-                <AiOutlineMenu size={25} />
-              ) : (
                 <AiOutlineClose size={25} />
+              ) : (
+                <AiOutlineMenu size={25} />
               )}
             </div>
           </>
