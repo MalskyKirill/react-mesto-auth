@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
+import BurgerMenu from './BurgerMenu';
 
 function Header({ loggedIn, userEmail, handleSingOut }) {
-  const [burger, setBurger] = useState(true);
+  const [burgerOpen, setBurgerOpen] = useState(true);
 
   const location = useLocation();
 
@@ -12,16 +13,11 @@ function Header({ loggedIn, userEmail, handleSingOut }) {
 
   return (
     <>
-      <ul className={burger ? 'burger' : 'burger burger_active'}>
-        <li>
-          <p className='header__email'>{userEmail}</p>
-        </li>
-        <li>
-          <button onClick={handleSingOut} className='header__link-in'>
-            Выйти
-          </button>
-        </li>
-      </ul>
+      <BurgerMenu
+        burgerOpen={burgerOpen}
+        userEmail={userEmail}
+        handleSingOut={handleSingOut}
+      />
       <header className='header'>
         <div className='header__logo'></div>
         {loggedIn ? (
@@ -33,10 +29,10 @@ function Header({ loggedIn, userEmail, handleSingOut }) {
               </button>
             </div>
             <div
-              onClick={() => setBurger(!burger)}
+              onClick={() => setBurgerOpen(!burgerOpen)}
               className='header__mobile-btn'
             >
-              {burger ? (
+              {burgerOpen ? (
                 <AiOutlineMenu size={25} />
               ) : (
                 <AiOutlineClose size={25} />
