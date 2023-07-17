@@ -1,7 +1,5 @@
 function BurgerMenu({ burgerOpen, userEmail, handleOut }) {
 
-  console.log(burgerOpen)
-
   return (
     <ul className={!burgerOpen ? 'burger' : 'burger burger_active'}>
       <li>

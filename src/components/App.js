@@ -155,8 +155,8 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem('token', data.token);
-          tokenCheck();
 
+          setUserEmail(email);
           setLoggedIn(true);
           navigate('/', { replace: true });
         }

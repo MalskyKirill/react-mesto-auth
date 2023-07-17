@@ -8,7 +8,7 @@
   background-color: var(--black);
   border: none;
   display: flex;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .header__link:hover {
